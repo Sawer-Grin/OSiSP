@@ -1,9 +1,22 @@
 #!/bin/bash
+fileSave=$2
+directory=$1
 
-for i in $( find "$1" -type d); do
-	amountSize=$( du --max-depth=0 "$i" | cut -f1 )
+if [ "$#" != 2 ]; then 
+	echo "problem with parametrs"
+	echo "first parametr - directory for search"
+	echo "second parametr - file for saving result"
+	exit 0
+fi 
+if [[ ! -d "$directory" || ! -f "$fileSave" ]]; then 
+	echo "you input uncorrect parametrs"
+	exit 0
+fi
+
+for i in $( find "$directory" -type d); do
+	amountSize=$( du --max-depth=0 --apparent-size "$i" | cut -f1 )
 	amountFiles=$( find "$i" -maxdepth 1 -type f | wc -l )
-	echo "Directory: $i Size: $amountSize Value of files:$amountFiles" >> "$2"
+	echo "Directory: $i Size: $amountSize Value: $amountFiles" >> "$fileSave"
 
 done
 
