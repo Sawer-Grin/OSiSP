@@ -4,20 +4,22 @@ directory=$1
 
 if [ "$#" != 2 ]; then 
 	echo "problem with parametrs"
-	echo "first parametr - directory for search"
-	echo "second parametr - file for saving result"
+	echo "first parametr - directory for search" 2> errors
+	echo "second parametr - file for saving result" 2> errors
 	exit 0
 fi 
-if [[ ! -d "$directory" ]]; then 
-	echo "Problem with file for saving"	
-	echo "first parametr - directory for search"
-	exit 0
-fi
 
-if [[ ! -f "$fileSave" ]]; then 
-	echo "Problem with directory"	
-	echo "second parametr - file for saving result"
-	exit 0
+if [[ ! -d "$directory" || ! -f "$fileSave" ]]; then
+	if [[ ! -d "$directory" ]]; then 
+		echo "Problem with file for saving" 2> errors
+		echo "first parametr - directory for search" 2> errors
+	fi
+
+	if [[ ! -f "$fileSave" ]]; then 
+		echo "Problem with directory" 2> errors
+		echo "second parametr - file for saving result" 2> errors
+	fi	
+	exit 0	
 fi
 
 
