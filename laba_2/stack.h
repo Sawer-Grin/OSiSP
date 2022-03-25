@@ -1,7 +1,3 @@
-//
-// Created by Richard on 3/4/22.
-//
-
 #ifndef OSISP_2_STACK_H
 #define OSISP_2_STACK_H
 

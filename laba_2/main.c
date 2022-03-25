@@ -29,7 +29,7 @@ int SolvingTask(FILE *file_for_saving_r, char* realPath){
         return -1;
     }
 
-    full_name_m_file[0] = "\0";
+    full_name_m_file[0] = 0;
     long long size_all_files = 0, max_size_file = -1;
     int count_file = 0;
     struct stack_t* local_stack = newStack();
@@ -66,7 +66,7 @@ int SolvingTask(FILE *file_for_saving_r, char* realPath){
                     size_all_files += info_file.st_size;
                     ++count_file;
                 }
-                if (S_ISDIR(info_file.st_mode)){
+                else{
                     push(local_stack, viewed_path_file);
                 }
 
@@ -85,6 +85,8 @@ int SolvingTask(FILE *file_for_saving_r, char* realPath){
 
     }
     printf("it's ending.\n");
+    free(viewed_path_file);
+    free(full_name_m_file);
 }
 
 int main(int argc, char** argv) {
@@ -110,8 +112,8 @@ int main(int argc, char** argv) {
     }
     SolvingTask(file, realpath(argv[1], NULL));
 
-    if (fclose(file) != 0){
-        printf(stderr, "%s: %s: %s\n", AppName, argv[2], strerror(errno));
+    if (fclose(file) == EOF){
+        fprintf(stderr, "%s: %s: %s\n", AppName, argv[2], strerror(errno));
         return -1;
     }
 
