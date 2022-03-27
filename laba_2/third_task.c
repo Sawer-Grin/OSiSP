@@ -26,19 +26,25 @@ int main(int argc, char *argv[]){
     }
 
     struct stat copy_stat;
-    stat(argv[1], &copy_stat);
-    chmod(argv[2], copy_stat.st_mode);
+    if (stat(argv[1], &copy_stat)){
+        fprintf(stderr, "Promblem with stat%\n", argv[2], strerror(errno));
+        return EXIT_FAILURE;
+    }
+    if (chmod(argv[2], copy_stat.st_mode)){
+        fprintf(stderr, "Problem with coping st_mode%\n", argv[2], strerror(errno));
+        return EXIT_FAILURE;
+    }
 
     char symb;
     while ((symb = fgetc(file_1)) != EOF){
         fputc(symb, file_2);
     }
 
-    if (fclose(file_1) == NULL){
+    if (fclose(file_1)){
         fprintf(stderr, "Problem with closing first file.\n", strerror(errno));
         return EXIT_FAILURE;
     };
-    if (fclose(file_2) == NULL){
+    if (fclose(file_2)){
         fprintf(stderr, "Problem with closing second file,\n", strerror(errno));
         return EXIT_FAILURE;
     }
