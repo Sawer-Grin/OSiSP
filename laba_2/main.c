@@ -30,13 +30,14 @@ int SolvingTask(FILE *file_for_saving_r, char* realPath){
     }
 
     full_name_m_file[0] = 0;
-    long long size_all_files = 0, max_size_file = -1;
-    int count_file = 0;
+    long int size_all_files = 0, max_size_file = -1;
+    long int  count_file = 0;
     struct stack_t* local_stack = newStack();
 
     push(local_stack, realPath);
     while( top(local_stack) != NULL){
-
+        size_all_files = 0, max_size_file = -1;
+        count_file = 0;
         char *localPath = pop(local_stack);
 
         // open directory
@@ -75,7 +76,7 @@ int SolvingTask(FILE *file_for_saving_r, char* realPath){
 
         printf("Path: %s Amount of file: %ld Size all files: %d Name the lagest files: %s\n",
                 localPath, count_file, size_all_files, full_name_m_file);
-        fprintf(file_for_saving_r, "Path: %s Amount of file: %ld Size all files: %d Name the lagest files: %s\n",
+        fprintf(file_for_saving_r, "Path: %s Amount of file: %ld Size all files: %ld Name the lagest files: %s\n",
                 localPath, count_file, size_all_files, full_name_m_file);
 
         if(closedir(nowDir)==-1){
