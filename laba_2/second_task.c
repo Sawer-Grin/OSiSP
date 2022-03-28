@@ -22,7 +22,7 @@ int main (int argc, char *argv[]){
         return EXIT_FAILURE;
     }
 
-    if ((char_setting = endptr) || (endptr - argv[2] < strlen(char_setting)))
+    if ((char_setting == endptr) || (endptr - argv[2] < strlen(char_setting)))
     {
         fprintf(stderr, "No digits were found\n");
         return EXIT_FAILURE;

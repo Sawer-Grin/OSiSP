@@ -30,7 +30,7 @@ int SolvingTask(FILE *file_for_saving_r, char* realPath){
     }
 
     full_name_m_file[0] = 0;
-    long int size_all_files = 0, max_size_file = -1;
+    long long int size_all_files = 0, max_size_file = 0;
     long int  count_file = 0;
     struct stack_t* local_stack = newStack();
 
@@ -64,7 +64,7 @@ int SolvingTask(FILE *file_for_saving_r, char* realPath){
                         max_size_file = info_file.st_size;
                         strcpy(full_name_m_file, basename(viewed_path_file));
                     }
-                    size_all_files += info_file.st_size;
+                    size_all_files += (info_file.st_size % 1024);
                     ++count_file;
                 }
                 else{
@@ -76,7 +76,7 @@ int SolvingTask(FILE *file_for_saving_r, char* realPath){
 
         printf("Path: %s Amount of file: %ld Size all files: %d Name the lagest files: %s\n",
                 localPath, count_file, size_all_files, full_name_m_file);
-        fprintf(file_for_saving_r, "Path: %s Amount of file: %ld Size all files: %ld Name the lagest files: %s\n",
+        fprintf(file_for_saving_r, "Path: %s Amount of file: %ld Size all files: Kb %ld Name the lagest files: %s\n",
                 localPath, count_file, size_all_files, full_name_m_file);
 
         if(closedir(nowDir)==-1){
@@ -106,17 +106,18 @@ int main(int argc, char** argv) {
         fprintf(stderr,"%s: %s: %s\n", AppName, argv[2], strerror(errno));
         return -1;
     }
-
-    if (realpath(argv[1], NULL) == NULL){ // argv[1]
+    char *result_real_path = realpath(argv[1], NULL);
+    if (result_real_path == NULL){ // argv[1]
         fprintf(stderr, "%s: %s: %s\n", AppName, argv[1], strerror(errno));
         return -1;
     }
-    SolvingTask(file, realpath(argv[1], NULL));
+
+    SolvingTask(file, result_real_path);
 
     if (fclose(file) == EOF){
         fprintf(stderr, "%s: %s: %s\n", AppName, argv[2], strerror(errno));
         return -1;
     }
-
+    free(result_real_path);
     return 0;
 }
