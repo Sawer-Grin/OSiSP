@@ -19,8 +19,9 @@ void stp_task_for(pid_t temp_pid){
             gettimeofday(&current_time, NULL);
             today = localtime(&current_time.tv_sec);
 
-            printf("PID: %d Time: %d:%0d:%0d.%d\n",
+            printf("PID: %d Parent PID: %d Time: %d:%0d:%0d.%d\n",
                    getpid(),
+                   getppid(),
                    today->tm_hour,
                    today->tm_min,
                    today->tm_sec,
@@ -42,7 +43,6 @@ int main(){
             stp_task_for(second_pid);
         }
         else{
-            stp_task_for(second_pid);
             system("ps -x");
         }
     }
