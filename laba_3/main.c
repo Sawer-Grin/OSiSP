@@ -153,13 +153,13 @@ int open_dir(char* dirname)
 int main(int argc, char* argv[])
 {
     int ret = 0;
-    argc = 3;
+    /*argc = 3;
     argv[1] = "/home/Richard/ForTest";
-    argv[2] = "15";
+    argv[2] = "15";*/
 
     if (argc < 3){
         fprintf(stderr, "usage: %s <file_dir> <amount_of_processes>\n", argv[0], strerror(errno));
-        return EXIT_FAILURE;
+        exit(EXIT_FAILURE);
     }
 
     char *endptr, *char_setting = argv[2];
@@ -170,13 +170,13 @@ int main(int argc, char* argv[])
     max_num_proc = strtoll(char_setting, &endptr, 10);
     if (errno != 0){
         fprintf(stderr, "Error: number is uncorrect %s\n", argv[2], strerror(errno));
-        return EXIT_FAILURE;
+        exit(EXIT_FAILURE);
     }
 
     if ((char_setting == endptr) || (endptr - argv[2] < strlen(char_setting)))
     {
         fprintf(stderr, "No digits were found\n");
-        return EXIT_FAILURE;
+        exit(EXIT_FAILURE);
     }
 
     cur_num_proc = 1;

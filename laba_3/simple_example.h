@@ -21,7 +21,7 @@ void create_new_node(struct node **new_head){
     if (temp == NULL){
         perror("Problem with crating new node in func initialize_struct");
         //free(temp);
-        exit(127);
+        exit(EXIT_FAILURE);
     }
 
     for (int i = 0; i < SIZE_OF_STRUCT; ++i){

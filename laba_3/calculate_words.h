@@ -5,9 +5,10 @@
 #ifndef OSISP_2_CALCULATE_WORDS_H
 #define OSISP_2_CALCULATE_WORDS_H
 
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 
 #include "stack.h"
 
@@ -40,7 +41,7 @@ void set_word(struct data_word *data, const char *new_data){
     int length = strlen(new_data);
     if (data->word == NULL){
         perror("String in calculate_word.h is empty");
-        exit(127);
+        exit(EXIT_FAILURE);
     }
     for (int i = 0; i < length; ++i){
         if (checkChar(new_data[i]))
@@ -54,7 +55,7 @@ char *copyString(char *str)
     char *tmp = (char *) malloc(strlen(str) + 1);
     if (tmp == NULL){
         perror("Problem with memory in copyString\n");
-        exit(127);
+        exit(EXIT_FAILURE);
     }
     strcpy(tmp, str);
     return tmp;
@@ -72,7 +73,7 @@ void push_char(struct data_word *data, char element){
 void delete_last_char(struct data_word *data){
     if (data == NULL){
         perror("Pointer data is NULL");
-        exit(127);
+        exit(EXIT_FAILURE);
     }
     char pos_last_elem = data->last_position;
     if (pos_last_elem > -1){

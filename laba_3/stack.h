@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 /**
  * Type for individual stack entry
@@ -47,7 +48,7 @@ char *copy_string(char *str) {
         tmp = (char *) malloc(strlen(str) + 1);
         if (tmp == NULL) {
             perror("Problem with memory in copyString\n");
-            exit(127);
+            exit(EXIT_FAILURE);
         }
         strcpy(tmp, str);
     }
